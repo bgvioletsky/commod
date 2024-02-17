@@ -6,7 +6,7 @@ if [ ! -d "$file_folder" ]; then
   mkdir "$file_folder"
 fi
 if [ ! -d img_name.txt ]; then
-  wget 
+  touch img_name.txt
 fi
 geturl(){
     url="https://www.dmoe.cc/random.php?return=json"
