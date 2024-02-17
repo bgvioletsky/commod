@@ -15,7 +15,7 @@ fi
 main(){
     url="https://www.dmoe.cc/random.php?return=json"
     links=()
-    counter=0
+    counter=1
     while [ $counter -le $threshold ]
     do
         response=$(curl -s "$url")
