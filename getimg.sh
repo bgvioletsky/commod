@@ -12,7 +12,7 @@ geturl(){
     url="https://www.dmoe.cc/random.php?return=json"
     links=()
     counter=1
-    while [ $counter -le $1 ]
+    while [ $counter -le $threshold ]
     do
         response=$(curl -s "$url")
         link=$(echo "$response" | jq -r '.imgurl')
@@ -35,7 +35,7 @@ creat(){
   find . -type f -iname "*.jpg" | awk 'length($0) >= 13' | jq --arg prefix "$cdn_prefix" -R -s  '[split("\n")[] | select(. != "") | sub("^\\."; "") | $prefix + .]' > img_url.json
 }
 main(){
-  links=($(geturl "$threshold"))
+  links=($(geturl))
   for link in "${links[@]}"
   do 
     file_name=$(basename "$link")
