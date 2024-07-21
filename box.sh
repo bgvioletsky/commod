@@ -3,7 +3,7 @@
  # @Author: bgcode
  # @Date: 2024-07-18 19:27:51
  # @LastEditors: bgcode
- # @LastEditTime: 2024-07-19 08:21:13
+ # @LastEditTime: 2024-07-21 19:07:52
  # @Description: 
  # @FilePath: /commod/box.sh
 ### 
@@ -31,6 +31,12 @@ function cyan(){
 }
 function white(){
        echo -e "\033[37m\033[01m$1 \033[0m"  #白色
+}
+function xuanzhe(){
+    echo -e "\033[30m\033[01m$1\033[0m" "\033[35m\033[01m$2 \033[0m"
+}
+function jianjie(){
+    echo -e "\033[30m\033[01m$1\033[0m" "\033[34m\033[01m$2 \033[0m"
 }
 folder_name=".bgcode"
     
@@ -109,12 +115,14 @@ install_alist(){
     launchctl load ~/Library/LaunchAgents/ci.nn.alist.plist
     cd ~/.bgcode/alist
     chmod +x alist
-    ./alist admin set bgcode
+    read -p "用户名" name
+    read -p "密码" password 
+    ./alist $name set $password
     clear
     echo "安装完成"
     echo "请打开浏览器访问 http://localhost:5244"
-    echo "账号为:admin"
-    echo "密码为:bgcode"
+    echo "账号为:$name"
+    echo "密码为:$password"
 }
 
 uninstall_alist(){
@@ -125,8 +133,26 @@ uninstall_alist(){
     echo "alist have been uninstall"
 }
 
+function installhomebrew(){
+    clear
+    green "开始安装homebrew"
+    /bin/zsh -c "$(curl -fsSL  https://cdn.jsdelivr.net/gh/Codebglh/command@0.0.3/Mac/Homebrew.sh)"
+    green "安装homebrew完成"
+    echo -e "退出请按q 键"
+    echo -e "回到菜单请按任意键"
+    read -p "请输入：" quit
+    case $quit  in
+        q )
+           exit 1
+	    ;;
+        * )
+            clear
+            choice
+        ;;
+    esac
+    choice
+}
 
-install_alist
 
 function choice(){
     cyan " -----------------------------------------------------------------------"
@@ -141,13 +167,22 @@ function choice(){
     read -p "请输入一个数字：" number
     case $number  in
         1 )
-           inhomebrew
+           installhomebrew
 	    ;;
         2 )
            ohmyzsh
 	    ;;
         3 )
            test
+	    ;;
+         4 )
+           test
+	    ;;
+         5 )
+           install_alist
+	    ;;
+         6 )
+           uninstall_alist
 	    ;;
         0 )
             exit 1
@@ -159,3 +194,4 @@ function choice(){
         ;;
     esac
 }
+choice
