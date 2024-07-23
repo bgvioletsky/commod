@@ -3,40 +3,68 @@
  # @Author: bgcode
  # @Date: 2024-07-18 19:27:51
  # @LastEditors: bgcode
- # @LastEditTime: 2024-07-21 19:07:52
- # @Description: 
+ # @LastEditTime: 2024-07-22 15:36:01
+ # @Description: 一个脚本用于配制本机相应环境
  # @FilePath: /commod/box.sh
 ### 
 
+# 定义一个彩色输出的通用函数，通过参数传递颜色代码和文本内容
+function print_colored(){
+    # 参数校验：确保至少有一个参数
+    if [ $# -lt 1 ]; then
+        echo "Error: No text to print."
+        return 1
+    fi
+
+    # 输出彩色文本
+    echo -e "\033[$1m\033[01m$2 \033[0m"
+}
+function print_2colored(){
+    # 参数校验：确保至少有一个参数
+    if [ $# -lt 3 ]; then
+        echo "Error: No text to print."
+        return 1
+    fi
+
+    # 输出彩色文本
+    echo -e "\033[$1m\033[01m$2 \033[0m\033[$3m\033[01m$4 \033[0m"
+}
+# 以下为各种颜色的文本输出函数
+# 使用通用彩色输出函数，传入颜色代码和文本
 function black(){
-       echo -e "\033[30m\033[01m$1 \033[0m"  #黑色
+    print_colored 30 "$1"   # 黑色
 }
 function red(){
-       echo -e "\033[31m\033[01m$1 \033[0m"  #红色
+    print_colored 31 "$1"   # 红色
 }
 function green(){
-       echo -e "\033[32m\033[01m$1 \033[0m"  #绿色
+    print_colored 32 "$1"   # 绿色
 }
 function yellow(){
-       echo -e "\033[33m\033[01m$1 \033[0m"  #黄色
+    print_colored 33 "$1"   # 黄色
 }
 function blue(){
-       echo -e "\033[34m\033[01m$1 \033[0m"  #蓝色
+    print_colored 34 "$1"   # 蓝色
 }
 function purple(){
-       echo -e "\033[35m\033[01m$1 \033[0m"  #紫色
+    print_colored 35 "$1"   # 紫色
 }
 function cyan(){
-       echo -e "\033[36m\033[01m$1 \033[0m"  #请色
+    print_colored 36 "$1"  # 青色
 }
 function white(){
-       echo -e "\033[37m\033[01m$1 \033[0m"  #白色
+    print_colored 37 "$1"   # 白色
 }
+
+# 特殊的彩色组合输出函数
 function xuanzhe(){
-    echo -e "\033[30m\033[01m$1\033[0m" "\033[35m\033[01m$2 \033[0m"
+    # 由于需要不同的颜色组合，此处仍然保持直接编码，但添加了注释说明
+    echo -e "\033[30m\033[01m$1\033[0m" "\033[35m\033[01m$2 \033[0m"  # 黑色和紫色组合
 }
+
 function jianjie(){
-    echo -e "\033[30m\033[01m$1\033[0m" "\033[34m\033[01m$2 \033[0m"
+    # 使用注释说明颜色
+    echo -e "\033[30m\033[01m$1\033[0m" "\033[34m\033[01m$2 \033[0m"  # 黑色和蓝色组合
 }
 folder_name=".bgcode"
     
@@ -138,8 +166,8 @@ function installhomebrew(){
     green "开始安装homebrew"
     /bin/zsh -c "$(curl -fsSL  https://cdn.jsdelivr.net/gh/Codebglh/command@0.0.3/Mac/Homebrew.sh)"
     green "安装homebrew完成"
-    echo -e "退出请按q 键"
-    echo -e "回到菜单请按任意键"
+    purple "退出请按q 键"
+    purple "回到菜单请按任意键"
     read -p "请输入：" quit
     case $quit  in
         q )
